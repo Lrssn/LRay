@@ -1,9 +1,8 @@
 #include "LScene.h"
 
-LScene::LScene()
-{
+LScene::LScene(){
+	this->mRootNode.setName("ROOT");
 }
 
-LScene::~LScene()
-{
+LScene::~LScene(){
 }

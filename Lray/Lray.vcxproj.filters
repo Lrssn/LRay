@@ -18,12 +18,12 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Renderer\Raytracer.cpp">
+    <ClCompile Include="Renderer\LRay.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Renderer\Raytracer.h">
+    <ClInclude Include="Renderer\LRay.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

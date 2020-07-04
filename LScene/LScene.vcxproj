@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{0bb857cf-5f13-49e0-b40a-dcb6629c89aa}</ProjectGuid>
-    <RootNamespace>Lray</RootNamespace>
+    <ProjectGuid>{a8d2f8bc-6c50-42b7-8806-0ef969ba94ae}</ProjectGuid>
+    <RootNamespace>LScene</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -139,11 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Renderer\Raytracer.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Renderer\Raytracer.h" />
+    <ClCompile Include="LScene.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

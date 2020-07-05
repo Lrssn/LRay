@@ -2,7 +2,7 @@
 #include <vector>
 #include <string>
 enum NODETYPE {
-	LS_MODEL, LS_OBJECT, LS_LIGHT, LS_CAMERA //polygonmodel, explicit model?
+	LS_MODEL, LS_OBJECT, LS_LIGHT, LS_CAMERA 
 };
 
 class LSceneNode{
@@ -11,21 +11,23 @@ public:
 	LSceneNode(std::string _name);
 	~LSceneNode();
 	
-	void addChild(LSceneNode* _node);
-	void moveNode(LSceneNode* _newParent);
-	void removeChild(LSceneNode* _node);
-	LSceneNode* getParent();
-	std::vector<LSceneNode*> getChildren();
+	void addChild(int _node);
+	void removeChild(int _node);
+	void moveNode(int _newParent);
+	
+	int getParent();
+	void setParent(int _parent);
+	std::vector<int> getChildren();
 
 	void setName(std::string _name);
 	std::string getName();
 
-	void setChildNumber(int _n);
-
+	void setNodeNumber(int _n);
+	int getNodeNumber();
 private:
-	LSceneNode* mParent;
-	std::vector<LSceneNode*> mChildren;
+	int mParent = -1;
+	std::vector<int> mChildren;
 	std::string mName;
-	int mChildNumber = 0;
+	int mNodeNumber = -1;
 };
 

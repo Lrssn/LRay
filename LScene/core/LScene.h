@@ -1,4 +1,7 @@
 #pragma once
+#include <iostream>
+#include <iomanip>
+
 #include "LSceneNode.h"
 class LScene{
 public:
@@ -6,13 +9,14 @@ public:
 	~LScene();
 	
 	void printScene();
-	void printNode(LSceneNode* _node);
 
 	void addNode(std::string _name);
-	void deleteNode(LSceneNode _node);
+	void deleteNode(int _node);
+	void moveNode(int a, int b);
 private:
+	void printNode(LSceneNode _node, int _level);
 	std::vector<LSceneNode> mNodes;
-	LSceneNode mRootNode;
+	int mNrNodes = 0;
 };
 
 

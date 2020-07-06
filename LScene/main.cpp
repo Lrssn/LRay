@@ -12,7 +12,6 @@ int main()
     scene.addNode("C"); 
     scene.addNode("D"); 
     scene.addNode("E");
-
     scene.printScene();
     
 }

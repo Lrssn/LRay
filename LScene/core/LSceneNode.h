@@ -24,6 +24,7 @@ public:
 
 	void setNodeNumber(int _n);
 	int getNodeNumber();
+
 private:
 	int mParent = -1;
 	std::vector<int> mChildren;

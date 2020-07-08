@@ -13,7 +13,9 @@ public:
 	LSObject();
 	~LSObject();
 
+	void setPos(vec3 _pos);
+	vec3 getPos();
 
 private:
-	vec3 pos;
+	vec3 mPos;
 };

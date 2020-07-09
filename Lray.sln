@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lray", "Lray\Lray.vcxproj",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LScene", "LScene\LScene.vcxproj", "{A8D2F8BC-6C50-42B7-8806-0EF969BA94AE}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LUtils", "LUtils\LUtils.vcxproj", "{0857D57C-8D83-4E34-82A8-3A92A3D4D19A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,14 @@ Global
 		{A8D2F8BC-6C50-42B7-8806-0EF969BA94AE}.Release|x64.Build.0 = Release|x64
 		{A8D2F8BC-6C50-42B7-8806-0EF969BA94AE}.Release|x86.ActiveCfg = Release|Win32
 		{A8D2F8BC-6C50-42B7-8806-0EF969BA94AE}.Release|x86.Build.0 = Release|Win32
+		{0857D57C-8D83-4E34-82A8-3A92A3D4D19A}.Debug|x64.ActiveCfg = Debug|x64
+		{0857D57C-8D83-4E34-82A8-3A92A3D4D19A}.Debug|x64.Build.0 = Debug|x64
+		{0857D57C-8D83-4E34-82A8-3A92A3D4D19A}.Debug|x86.ActiveCfg = Debug|Win32
+		{0857D57C-8D83-4E34-82A8-3A92A3D4D19A}.Debug|x86.Build.0 = Debug|Win32
+		{0857D57C-8D83-4E34-82A8-3A92A3D4D19A}.Release|x64.ActiveCfg = Release|x64
+		{0857D57C-8D83-4E34-82A8-3A92A3D4D19A}.Release|x64.Build.0 = Release|x64
+		{0857D57C-8D83-4E34-82A8-3A92A3D4D19A}.Release|x86.ActiveCfg = Release|Win32
+		{0857D57C-8D83-4E34-82A8-3A92A3D4D19A}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

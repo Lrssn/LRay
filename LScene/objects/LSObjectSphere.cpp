@@ -3,6 +3,10 @@
 LSObjectSphere::LSObjectSphere() {
 }
 
+LSObjectSphere::LSObjectSphere(float _radius) {
+	this->mRadius = _radius;
+}
+
 LSObjectSphere::~LSObjectSphere() {
 }
 

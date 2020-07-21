@@ -1,7 +1,5 @@
 #pragma once
-#pragma once
-#include <cmath>
-#include <iostream>
+#include "../pch.h"
 
 namespace LUtils {
 	namespace LMath {

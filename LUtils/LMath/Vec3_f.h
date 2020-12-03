@@ -2,7 +2,6 @@
 #include "../pch.h"
 namespace LUtils {
     namespace LMath {
-
         class Vec3_f {
         public:
             Vec3_f() : e{ 0, 0, 0 } {}

@@ -109,6 +109,11 @@ namespace LUtils {
 				e[5] *= _y;
 				e[10] *= _z;
 			};
+			void scale(Vec3_f _v) {
+				e[1] *= _v.x();
+				e[5] *= _v.y();
+				e[10] *= _v.z();
+			};
 			void rotate();
 
 			void set(Matrix4x4 _m) {
@@ -132,10 +137,10 @@ namespace LUtils {
 				e[14] = _m.e[14];
 				e[15] = _m.e[15];
 			};
-			void set(float _f0, float _f1, float _f2, float _f3,
-				float _f4, float _f5, float _f6, float _f7,
-				float _f8, float _f9, float _f10, float _f11,
-				float _f12, float _f13, float _f14, float _f15) {
+			void set(	float _f0,	float _f1,	float _f2,	float _f3,
+						float _f4,	float _f5,	float _f6,	float _f7,
+						float _f8,	float _f9,	float _f10, float _f11,
+						float _f12, float _f13, float _f14, float _f15) {
 				e[0] = _f0;
 				e[1] = _f1;
 				e[2] = _f2;

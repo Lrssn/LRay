@@ -16,10 +16,10 @@ namespace LUtils {
 				y = _v.y();
 				z = _v.z();
 			};
-			Vertex(float _v0, float _v1, float _v2) {
-				x = _v0;
-				y = _v1;
-				z = _v2;
+			Vertex(float _f0, float _f1, float _f2) {
+				x = _f0;
+				y = _f1;
+				z = _f2;
 			};
 
 			LMath::Vec3_f get() { return LMath::Vec3_f(x, y, z); };

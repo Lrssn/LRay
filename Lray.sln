@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lray", "Lray\Lray.vcxproj", "{0BB857CF-5F13-49E0-B40A-DCB6629C89AA}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LScene", "LScene\LScene.vcxproj", "{A8D2F8BC-6C50-42B7-8806-0EF969BA94AE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0857D57C-8D83-4E34-82A8-3A92A3D4D19A} = {0857D57C-8D83-4E34-82A8-3A92A3D4D19A}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LUtils", "LUtils\LUtils.vcxproj", "{0857D57C-8D83-4E34-82A8-3A92A3D4D19A}"
 EndProject

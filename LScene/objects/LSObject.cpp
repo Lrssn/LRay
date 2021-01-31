@@ -6,10 +6,10 @@ LSObject::LSObject() {
 LSObject::~LSObject() {
 }
 
-void LSObject::setPos(vec3 _pos) {
+void LSObject::setPos(LUtils::LMath::Vec3_f _pos) {
 	this->mPos = _pos;
 }
 
-vec3 LSObject::getPos() {
+LUtils::LMath::Vec3_f LSObject::getPos() {
 	return this->mPos;
 }

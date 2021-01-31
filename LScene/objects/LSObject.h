@@ -1,9 +1,6 @@
 #pragma once
-struct vec3 {
-	float x; 
-	float y; 
-	float z;
-};
+#include "LUtils/LUtils.cpp"
+
 enum OBJECTTYPE {
 	IMPLICIT_OBJECT, MESH_OBJECT
 };
@@ -13,9 +10,10 @@ public:
 	LSObject();
 	~LSObject();
 
-	void setPos(vec3 _pos);
-	vec3 getPos();
+	void setPos(LUtils::LMath::Vec3_f _pos);
+	LUtils::LMath::Vec3_f getPos();
+	bool getIntersection(LUtils::LMath::Vec3_f _rayo, LUtils::LMath::Vec3_f _raydir);
 
-private:
-	vec3 mPos;
+protected:
+	LUtils::LMath::Vec3_f mPos;
 };

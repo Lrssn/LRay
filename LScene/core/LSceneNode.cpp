@@ -2,8 +2,9 @@
 LSceneNode::LSceneNode(){
 }
 
-LSceneNode::LSceneNode(std::string _name) {
+LSceneNode::LSceneNode(std::string _name, NODETYPE _type = LS_DUMMY_NODE) {
 	this->mName = _name;
+	this->mType = _type;
 }
 
 LSceneNode::~LSceneNode(){
@@ -46,6 +47,36 @@ std::string LSceneNode::getName()
 {
 	return this->mName;
 }
+NODETYPE LSceneNode::getType() {
+	return this->mType;
+}
+std::string LSceneNode::getTypeName() {
+	if (this->mType == LS_MODEL)
+		return "LS_MODEL";
+	else if (this->mType == LS_OBJECT)
+		return "LS_OBJECT";
+	else if (this->mType == LS_LIGHT)
+		return "LS_LIGHT";
+	else if (this->mType == LS_CAMERA)
+		return "LS_CAMERA";
+	else if (this->mType == LS_DUMMY_NODE)
+		return "LS_DUMMY_NODE";
+	else
+		return "COULD NOT FIND TYPE";
+}
+
+std::string LSceneNode::printNode() {
+	std::string data = "";
+	if (this->mType == LS_MODEL)
+		data = "LS_MODEL";
+	else if (this->mType == LS_OBJECT)
+		data = "LS_OBJECT";
+	else if (this->mType == LS_LIGHT)
+		data = "LS_LIGHT";
+	else if (this->mType == LS_CAMERA)
+		data = "LS_CAMERA";
+	return this->mName + ": " + this->getTypeName() + ": " + std::to_string(this->mNodeNumber) + ": " + data;
+}
 
 void LSceneNode::setNodeNumber(int _n) {
 	this->mNodeNumber = _n;
@@ -53,4 +84,12 @@ void LSceneNode::setNodeNumber(int _n) {
 
 int LSceneNode::getNodeNumber() {
 	return this->mNodeNumber;
+}
+
+void LSceneNode::addData(unsigned int _data) {
+	this->mData = _data;
+}
+
+unsigned int LSceneNode::getData() {
+	return this->mData;
 }

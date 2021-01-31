@@ -57,9 +57,6 @@
     <ClInclude Include="LTimer\LTimer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Lnoise.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Geometry\Mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -73,6 +70,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Geometry\MeshData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometry\LGeometry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Random\LNoise.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LMath\Intersections.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LMath\Vector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LMath\Matrix.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

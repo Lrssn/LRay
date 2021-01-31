@@ -19,6 +19,7 @@ namespace LUtils{
 		private:
 			std::vector<Vertex> mVertices;
 			std::vector<size_t> mIndices;
+			std::vector<unsigned int> mTextureIDs;
 		};
 	}
 }

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -152,9 +152,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Geometry\LGeometry.h" />
     <ClInclude Include="Geometry\Mesh.h" />
     <ClInclude Include="Geometry\HalfEdgeMesh.h" />
+    <ClInclude Include="LMath\Intersections.h" />
     <ClInclude Include="LMath\LMath.h" />
+    <ClInclude Include="LMath\Matrix.h" />
     <ClInclude Include="LMath\Matrix2x2.h" />
     <ClInclude Include="LMath\Matrix4x4.h" />
     <ClInclude Include="LMath\Vec2.h" />
@@ -164,8 +167,9 @@
     <ClInclude Include="LMath\Vec3_i.h" />
     <ClInclude Include="LMath\Vec4_f.h" />
     <ClInclude Include="Geometry\MeshData.h" />
+    <ClInclude Include="LMath\Vector.h" />
     <ClInclude Include="Random\LRandom.h" />
-    <ClInclude Include="Lnoise.h" />
+    <ClInclude Include="Random\LNoise.h" />
     <ClInclude Include="LTimer\LTimer.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="LMath\Vec3.h" />

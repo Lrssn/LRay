@@ -79,13 +79,13 @@ namespace LUtils {
             return (1 / t) * v;
         }
 
-        inline float dot(const Vec3_f& u, const Vec3_f& v) {
+        inline float Dot(const Vec3_f& u, const Vec3_f& v) {
             return u.e[0] * v.e[0]
                 + u.e[1] * v.e[1]
                 + u.e[2] * v.e[2];
         }
 
-        inline Vec3_f cross(const Vec3_f& u, const Vec3_f& v) {
+        inline Vec3_f Cross(const Vec3_f& u, const Vec3_f& v) {
             return Vec3_f(u.e[1] * v.e[2] - u.e[2] * v.e[1],
                 u.e[2] * v.e[0] - u.e[0] * v.e[2],
                 u.e[0] * v.e[1] - u.e[1] * v.e[0]);

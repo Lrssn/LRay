@@ -15,10 +15,10 @@ namespace LUtils {
 				std::vector<Vertex> v = _mesh.GetVertices();
 				for (size_t i = 0; i < v.size(); i++) {
 					HEVertex newV(v[i]);
-					this->mVertices.push_back(newV);
-					CreateHalfEdge();
+					this->mVertices.push_back(newV);					
 				}
 				this->mIndices = _mesh.GetIndices();
+				CreateHalfEdge();
 			};
 			~HalfEdgeMesh() {};
 

@@ -5,10 +5,10 @@
 class hitableList : public hitable {
 public:
 	hitableList(){}
-	hitableList(hitable** _list, int _n) { this->mList = _list; this->mListSize = _n; }
+	hitableList(std::vector<hitable*> _list, int _n) { this->mList = _list; this->mListSize = _n; }
 	virtual bool hit(const ray& _ray, float _tMin, float _tMax, hitRecord& _rec) const;
 private:
-	hitable** mList;
+	std::vector<hitable*> mList;
 	int mListSize = 0;
 };
 

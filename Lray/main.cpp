@@ -8,6 +8,7 @@
 #include "Renderer/ray.h"
 #include "Renderer/hitable_list.h"
 #include "Renderer/sphere.h"
+#include "Renderer/movingSphere.h"
 #include "Renderer/camera.h"
 #include "Renderer/math.h"
 #include "Renderer/material.h"
@@ -43,7 +44,9 @@ hitable* randomScene(int _nrOfSpheres) {
             float chooseMat = randomDouble();
             vec3 center(a + 0.9f * randomDouble(), 0.2f, b + 0.9 * randomDouble());
             if ((center - vec3(4.0f, 0.2f, 0.0f)).length() > 0.9f) {
-                if (chooseMat < 0.8f) { //diffuse
+                if (chooseMat < 0.5f) { //diffuse
+                    objList.push_back(new movingSphere(center, center+vec3(0.0f, 0.5f*randomDouble(), 0.0f), 0.0f, 1.0f,  0.2f, new lambertian(vec3(randomDouble(), randomDouble(), randomDouble()))));
+                } else if (chooseMat < 0.8f) { //diffuse
                     objList.push_back(new sphere(center, 0.2f, new lambertian(vec3(randomDouble(), randomDouble(), randomDouble()))));
                 } else if (chooseMat < 0.95f) { //metal
                         objList.push_back(new sphere(center, 0.2f, new metal(vec3(0.5f*(1+randomDouble()), 0.5f * (1 + randomDouble()), 0.5f * (1 + randomDouble())), 0.5f * (1 + randomDouble()))));
@@ -63,12 +66,12 @@ hitable* randomScene(int _nrOfSpheres) {
 
 int main(){
     std::vector<int> color;
-    int nx = 3840, ny = 2160, ns = 100;
-    vec3 lookfrom(3.0f, 3.0f, 2.0f);
-    vec3 lookat(0.0f, 0.0f, -1.0f);
-    float disttofocus = (lookfrom - lookat).length();
-    float aperture = 0.1f;
-    camera cam(lookfrom, lookat, vec3(0.0f, 1.0f, 0.0f), 90, float(nx)/float(ny), aperture, disttofocus);
+    int nx = 1280, ny = 720, ns = 50;
+    vec3 lookfrom(13.0f, 2.0f, 3.0f);
+    vec3 lookat(0.0f, 0.0f, 0.0f);
+    float disttofocus = 10.0f;
+    float aperture = 0.0f;
+    camera cam(lookfrom, lookat, vec3(0.0f, 1.0f, 0.0f), 20.0f, float(nx)/float(ny), aperture, disttofocus, 0.0f, 1.0f);
 
     hitable* world = randomScene(500);
     int current = 0;

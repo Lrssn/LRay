@@ -4,8 +4,10 @@
 
 class camera {
 public:
-	camera(vec3 _lookFrom, vec3 _lookAt, vec3 _up, float _vfov, float _aspect, float _aperture, float _focusDist) 
+	camera(vec3 _lookFrom, vec3 _lookAt, vec3 _up, float _vfov, float _aspect, float _aperture, float _focusDist, float _startTime, float _endTime) 
 	{
+		this->mStartTime = _startTime;
+		this->mEndTime = _endTime;
 		this->mLensRadius = _aperture / 2;
 		float theta = _vfov * pi / 180;
 		float halfHeight = tan(theta / 2);
@@ -22,10 +24,11 @@ public:
 	ray createRay(float _s, float _t) { 
 		vec3 rd = this->mLensRadius * randomInUnitDisk();
 		vec3 offset = u * rd.x() + v * rd.y();
-		return ray(this->mPosition + offset, this->mLowerLeftCorner + _s * this->mHorizontal + _t * this->mVertical - this->mPosition-offset); 
+		float rayTime = this->mStartTime + randomDouble() * (this->mEndTime - this->mStartTime);
+		return ray(this->mPosition + offset, this->mLowerLeftCorner + _s * this->mHorizontal + _t * this->mVertical - this->mPosition-offset, rayTime); 
 	}
 private:
 	vec3 mPosition, mHorizontal, mVertical, mLowerLeftCorner, u, v, w;
-	float mLensRadius;
+	float mLensRadius, mStartTime, mEndTime;
 
 };

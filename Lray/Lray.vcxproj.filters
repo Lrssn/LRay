@@ -47,5 +47,11 @@
     <ClInclude Include="Renderer\material.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Lray.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\movingSphere.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

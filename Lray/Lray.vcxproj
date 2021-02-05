@@ -146,12 +146,14 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Lray.h" />
     <ClInclude Include="Renderer\camera.h" />
     <ClInclude Include="Renderer\hitable.h" />
     <ClInclude Include="Renderer\hitable_list.h" />
     <ClInclude Include="Renderer\IO.h" />
     <ClInclude Include="Renderer\material.h" />
     <ClInclude Include="Renderer\math.h" />
+    <ClInclude Include="Renderer\movingSphere.h" />
     <ClInclude Include="Renderer\ray.h" />
     <ClInclude Include="Renderer\sphere.h" />
     <ClInclude Include="Renderer\vec3.h" />

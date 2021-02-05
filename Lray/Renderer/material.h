@@ -16,7 +16,7 @@ public:
 	lambertian(const vec3& _albedo) : mAlbedo(_albedo){}
 	virtual bool scatter(const ray& _rayIn, const hitRecord& _rec, vec3& _attenuation, ray& _scatteredRay) const {
 		vec3 target = _rec.p + _rec.normal + randomInUnitSphere();
-		_scatteredRay = ray(_rec.p, target - _rec.p);
+		_scatteredRay = ray(_rec.p, target - _rec.p, _rayIn.time());
 		_attenuation = this->mAlbedo;
 		return true;
 	}
@@ -32,7 +32,7 @@ public:
 	metal(const vec3& _albedo, float _fuzz) : mAlbedo(_albedo) { if (mFuzz < 1.0f) this->mFuzz = _fuzz; else this->mFuzz = 1.0f; }
 	virtual bool scatter(const ray& _rayIn, const hitRecord& _rec, vec3& _attenuation, ray& _scatteredRay) const {
 		vec3 reflected = reflect(unitVector(_rayIn.direction()), _rec.normal);
-		_scatteredRay = ray(_rec.p, reflected + this->mFuzz * randomInUnitSphere());
+		_scatteredRay = ray(_rec.p, reflected + this->mFuzz * randomInUnitSphere(), _rayIn.time());
 		_attenuation = this->mAlbedo;
 		return (dot(_scatteredRay.direction(), _rec.normal) > 0);
 	}
@@ -69,9 +69,9 @@ public:
 			reflectProb = 1.0f;
 		}
 		if (randomDouble() < reflectProb) {
-			_scatteredRay = ray(_rec.p, reflected);
+			_scatteredRay = ray(_rec.p, reflected, _rayIn.time());
 		} else {
-			_scatteredRay = ray(_rec.p, refracted);
+			_scatteredRay = ray(_rec.p, refracted, _rayIn.time());
 		}
 		return true;
 	}

@@ -2,29 +2,26 @@
 
 #include "ray.h"
 #include "vec3.h"
+#include "texture.h"
 
 struct hitRecord;
 
 class material {
 public:
 	virtual bool scatter(const ray& _rayIn, const hitRecord& _rec, vec3& _attenuation, ray& _scatteredRay) const = 0;
-	virtual vec3 getcolor() const = 0;
 };
 
 class lambertian : public material {
 public:
-	lambertian(const vec3& _albedo) : mAlbedo(_albedo){}
+	lambertian(texture* _albedo) : mAlbedo(_albedo){}
 	virtual bool scatter(const ray& _rayIn, const hitRecord& _rec, vec3& _attenuation, ray& _scatteredRay) const {
 		vec3 target = _rec.p + _rec.normal + randomInUnitSphere();
 		_scatteredRay = ray(_rec.p, target - _rec.p, _rayIn.time());
-		_attenuation = this->mAlbedo;
+		_attenuation = this->mAlbedo->value(0.0f, 0.0f, _rec.p);
 		return true;
 	}
-	virtual vec3 getcolor() const {
-		return this->mAlbedo;
-	}
 private:
-	vec3 mAlbedo;
+	texture* mAlbedo;
 };
 
 class metal : public material {
@@ -35,9 +32,6 @@ public:
 		_scatteredRay = ray(_rec.p, reflected + this->mFuzz * randomInUnitSphere(), _rayIn.time());
 		_attenuation = this->mAlbedo;
 		return (dot(_scatteredRay.direction(), _rec.normal) > 0);
-	}
-	virtual vec3 getcolor() const {
-		return this->mAlbedo;
 	}
 private:
 	vec3 mAlbedo;
@@ -74,9 +68,6 @@ public:
 			_scatteredRay = ray(_rec.p, refracted, _rayIn.time());
 		}
 		return true;
-	}
-	virtual vec3 getcolor() const {
-		return vec3(1.0f, 1.0f, 1.0f);
 	}
 private:
 	float mRefIdx;

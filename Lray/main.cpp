@@ -37,17 +37,18 @@ vec3 GetColor(const ray& _ray, hitable* _world, int _depth) {
 
 hitable* randomScene(int _nrOfSpheres) {
     std::vector<hitable*> objList;
-    objList.push_back(new sphere(vec3(0.0f, -1000.0f, -1.0f), 1000.0f, new lambertian(vec3(0.5f, 0.5f, 0.5f))));
+    texture* checker = new checkerTexture(new constantTexture(vec3(1.0f, 1.0f, 1.0f)), new constantTexture(vec3(0.0f, 1.0f, 0.0f)));
+    objList.push_back(new sphere(vec3(0.0f, -1000.0f, -1.0f), 1000.0f, new lambertian(checker)));
     int i = 1;
-    for (int a = -11; a < 11; a++) {
-        for (int b = -11; b < 11; b++) {
+    for (int a = -5; a < 5; a++) {
+        for (int b = -5; b < 5; b++) {
             float chooseMat = randomDouble();
             vec3 center(a + 0.9f * randomDouble(), 0.2f, b + 0.9 * randomDouble());
             if ((center - vec3(4.0f, 0.2f, 0.0f)).length() > 0.9f) {
                 if (chooseMat < 0.5f) { //diffuse
-                    objList.push_back(new movingSphere(center, center+vec3(0.0f, 0.5f*randomDouble(), 0.0f), 0.0f, 1.0f,  0.2f, new lambertian(vec3(randomDouble(), randomDouble(), randomDouble()))));
+                    objList.push_back(new movingSphere(center, center+vec3(0.0f, 0.5f*randomDouble(), 0.0f), 0.0f, 1.0f,  0.2f, new lambertian(new constantTexture(vec3(randomDouble(), randomDouble(), randomDouble())))));
                 } else if (chooseMat < 0.8f) { //diffuse
-                    objList.push_back(new sphere(center, 0.2f, new lambertian(vec3(randomDouble(), randomDouble(), randomDouble()))));
+                    objList.push_back(new sphere(center, 0.2f, new lambertian(new constantTexture(vec3(randomDouble(), randomDouble(), randomDouble())))));
                 } else if (chooseMat < 0.95f) { //metal
                         objList.push_back(new sphere(center, 0.2f, new metal(vec3(0.5f*(1+randomDouble()), 0.5f * (1 + randomDouble()), 0.5f * (1 + randomDouble())), 0.5f * (1 + randomDouble()))));
                 } else { //glass
@@ -58,22 +59,32 @@ hitable* randomScene(int _nrOfSpheres) {
         }
     }
     objList.push_back(new sphere(vec3(0.0f, 1.0f, 0.0f), 1.0f, new dielectric(1.5f)));
-    objList.push_back(new sphere(vec3(-4.0f, 1.0f, 0.0f), 1.0f, new lambertian(vec3(0.4f, 0.2f, 0.1f))));
+    objList.push_back(new sphere(vec3(-4.0f, 1.0f, 0.0f), 1.0f, new lambertian(new constantTexture(vec3(0.4f, 0.2f, 0.1f)))));
     objList.push_back(new sphere(vec3(4.0f, 1.0f, 0.0f), 1.0f, new metal(vec3(0.7f, 0.6f, 0.5f), 0.0f)));
 
     return new hitableList(objList, objList.size());
 }
 
+hitable* twoSpheres() {
+    std::vector<hitable*> objList;
+    texture* checker = new checkerTexture(new constantTexture(vec3(1.0f, 1.0f, 1.0f)), new constantTexture(vec3(0.0f, 1.0f, 0.0f)));
+    texture* perlin = new noiseTexture();
+    objList.push_back(new sphere(vec3(0.0f, -1000.0f, -1.0f), 1000.0f, new lambertian(checker)));
+    objList.push_back(new sphere(vec3(0.0f, 2.0f, 0.0f), 2.0f, new lambertian(perlin)));
+    return new hitableList(objList, objList.size());
+}
+
 int main(){
     std::vector<int> color;
-    int nx = 1280, ny = 720, ns = 50;
+    int nx = 800, ny = 600, ns = 25;
     vec3 lookfrom(13.0f, 2.0f, 3.0f);
     vec3 lookat(0.0f, 0.0f, 0.0f);
     float disttofocus = 10.0f;
     float aperture = 0.0f;
     camera cam(lookfrom, lookat, vec3(0.0f, 1.0f, 0.0f), 20.0f, float(nx)/float(ny), aperture, disttofocus, 0.0f, 1.0f);
 
-    hitable* world = randomScene(500);
+    //hitable* world = randomScene(500);
+    hitable* world = twoSpheres();
     int current = 0;
     float percent = 0.0f, total = nx * ny;
     std::cout << std::setprecision(5) << percent << "% finished" << std::endl;

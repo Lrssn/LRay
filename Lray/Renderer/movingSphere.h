@@ -7,7 +7,10 @@ class movingSphere : public hitable {
 public:
     movingSphere() {}
     movingSphere(vec3 _centerStart, vec3 _centerEnd, float _startTime, float _endTime, float _radius, material* _material) { this->mCenterStart = _centerStart; this->mCenterEnd = _centerEnd; this->mStartTime = _startTime; this->mEndTime = _endTime; this->mRadius = _radius; this->mMaterialPtr = _material; }
+    
     virtual bool hit(const ray& _ray, float _tMin, float _tMax, hitRecord& _rec) const;
+    virtual bool boundingBox(float _t0, float _t1, aabb& _bBox) const;
+    
     vec3 currentCenter(float _t) const;
 
     vec3 mCenterStart, mCenterEnd;
@@ -45,4 +48,11 @@ bool movingSphere::hit(const ray& _ray, float _tMin, float _tMax, hitRecord& _re
         }
     }
     return false;
+}
+
+bool movingSphere::boundingBox(float _t0, float _t1, aabb& _bBox) const {
+    aabb bBoxStart = aabb(this->mCenterStart - vec3(this->mRadius, this->mRadius, this->mRadius), this->mCenterStart + vec3(this->mRadius, this->mRadius, this->mRadius));
+    aabb bBoxEnd= aabb(this->mCenterEnd - vec3(this->mRadius, this->mRadius, this->mRadius), this->mCenterEnd + vec3(this->mRadius, this->mRadius, this->mRadius));
+    _bBox = combineBox(bBoxStart, bBoxEnd);
+    return true;
 }

@@ -8,6 +8,7 @@ public:
 	sphere(){}
     sphere(vec3 _center, float _radius, material* _material) { this->mCenter = _center; this->mRadius = _radius; this->mMaterialPtr = _material; }
 	virtual bool hit(const ray& _ray, float _tMin, float _tMax, hitRecord& _rec) const;
+    virtual bool boundingBox(float _t0, float _t1, aabb& _bBox) const;
 
 	vec3 mCenter;
 	float mRadius;
@@ -39,4 +40,9 @@ bool sphere::hit(const ray& _ray, float _tMin, float _tMax, hitRecord& _rec) con
         }
     }
     return false;
+}
+
+bool sphere::boundingBox(float _t0, float _t1, aabb& _bBox) const {
+    _bBox = aabb(this->mCenter - vec3(this->mRadius, this->mRadius, this->mRadius), this->mCenter + vec3(this->mRadius, this->mRadius, this->mRadius));
+    return true;
 }

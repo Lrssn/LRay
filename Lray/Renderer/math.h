@@ -41,3 +41,6 @@ inline float schlick(float _cosine, float _refIdx) {
     r0 = r0 * r0;
     return r0 + (1 - r0) * std::pow((1 - _cosine), 5);
 }
+
+inline float ffmin(float _a, float _b) { return _a < _b ? _a : _b; }
+inline float ffmax(float _a, float _b) { return _a > _b ? _a : _b; }

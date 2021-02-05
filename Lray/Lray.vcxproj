@@ -147,6 +147,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lray.h" />
+    <ClInclude Include="Renderer\aabb.h" />
+    <ClInclude Include="Renderer\bvhNode.h" />
     <ClInclude Include="Renderer\camera.h" />
     <ClInclude Include="Renderer\hitable.h" />
     <ClInclude Include="Renderer\hitable_list.h" />
@@ -154,8 +156,10 @@
     <ClInclude Include="Renderer\material.h" />
     <ClInclude Include="Renderer\math.h" />
     <ClInclude Include="Renderer\movingSphere.h" />
+    <ClInclude Include="Renderer\perlin.h" />
     <ClInclude Include="Renderer\ray.h" />
     <ClInclude Include="Renderer\sphere.h" />
+    <ClInclude Include="Renderer\texture.h" />
     <ClInclude Include="Renderer\vec3.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

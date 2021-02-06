@@ -44,3 +44,18 @@ inline float schlick(float _cosine, float _refIdx) {
 
 inline float ffmin(float _a, float _b) { return _a < _b ? _a : _b; }
 inline float ffmax(float _a, float _b) { return _a > _b ? _a : _b; }
+
+inline float trilinearInterpolation(float _c[2][2][2], float _u, float _v, float _w) {
+    float accum = 0.0f;
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 2; j++) {
+            for (int k = 0; k < 2; k++) {
+                accum +=    (i * _u + (1 - i) * (1 - _u)) *
+                            (j * _v + (1 - j) * (1 - _v)) *
+                            (k * _w + (1 - k) * (1 - _w)) *
+                            _c[i][j][k];
+            }
+        }
+    }
+    return accum;
+}

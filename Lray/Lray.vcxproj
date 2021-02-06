@@ -160,6 +160,7 @@
     <ClInclude Include="Renderer\ray.h" />
     <ClInclude Include="Renderer\sphere.h" />
     <ClInclude Include="Renderer\texture.h" />
+    <ClInclude Include="Renderer\utils.h" />
     <ClInclude Include="Renderer\vec3.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

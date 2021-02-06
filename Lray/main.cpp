@@ -1,3 +1,5 @@
+#define STB_IMAGE_IMPLEMENTATION
+
 #include <float.h>
 #include <stdlib.h>
 #include <iostream>
@@ -13,6 +15,7 @@
 #include "Renderer/math.h"
 #include "Renderer/material.h"
 
+#include "Externals/stb_image.h"
 
 
 
@@ -68,15 +71,18 @@ hitable* randomScene(int _nrOfSpheres) {
 hitable* twoSpheres() {
     std::vector<hitable*> objList;
     texture* checker = new checkerTexture(new constantTexture(vec3(1.0f, 1.0f, 1.0f)), new constantTexture(vec3(0.0f, 1.0f, 0.0f)));
-    texture* perlin = new noiseTexture();
+    int nx, ny, nn;
+    unsigned char* tex_data = stbi_load("earthmap.png", &nx, &ny, &nn, 0);
     objList.push_back(new sphere(vec3(0.0f, -1000.0f, -1.0f), 1000.0f, new lambertian(checker)));
-    objList.push_back(new sphere(vec3(0.0f, 2.0f, 0.0f), 2.0f, new lambertian(perlin)));
+    objList.push_back(new sphere(vec3(0.0f, 2.0f, 0.0f), 2.0f, new lambertian(new imageTexture(tex_data, nx, ny))));
     return new hitableList(objList, objList.size());
 }
 
+
+
 int main(){
     std::vector<int> color;
-    int nx = 800, ny = 600, ns = 25;
+    int nx = 400, ny = 300, ns = 10;
     vec3 lookfrom(13.0f, 2.0f, 3.0f);
     vec3 lookat(0.0f, 0.0f, 0.0f);
     float disttofocus = 10.0f;

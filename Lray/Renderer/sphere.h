@@ -2,6 +2,7 @@
 #include <memory>
 #include <cstdlib>
 #include "hitable.h"
+#include "utils.h"
 
 class sphere : public hitable {
 public:
@@ -27,6 +28,7 @@ bool sphere::hit(const ray& _ray, float _tMin, float _tMax, hitRecord& _rec) con
             _rec.t = temp;
             _rec.p = _ray.pointAtParameter(_rec.t);
             _rec.normal = (_rec.p - this->mCenter) / this->mRadius;
+            sphereUV((_rec.p - this->mCenter)/this->mRadius, _rec.u, _rec.v);
             _rec.matPtr = this->mMaterialPtr;
             return true;
         }

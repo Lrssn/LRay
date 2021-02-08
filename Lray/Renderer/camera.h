@@ -13,10 +13,10 @@ public:
 		float halfHeight = tan(theta / 2);
 		float halfWidth = _aspect * halfHeight;
 		this->mPosition = _lookFrom;
-		w = unitVector(_lookFrom - _lookAt);
-		u = unitVector(cross(_up, w));
-		v = cross(w, u);
-		this->mLowerLeftCorner = this->mPosition - halfWidth * _focusDist * u - halfHeight * _focusDist * v - _focusDist*w;
+		this->w = unitVector(_lookFrom - _lookAt);
+		this->u = unitVector(cross(_up, w));
+		this->v = cross(w, u);
+		this->mLowerLeftCorner = this->mPosition - halfWidth * _focusDist * u - halfHeight * _focusDist * v - _focusDist * w;
 		this->mHorizontal = 2* halfWidth * _focusDist * u;
 		this->mVertical = 2* halfHeight * _focusDist * v;
 		

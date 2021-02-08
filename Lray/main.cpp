@@ -26,16 +26,18 @@ vec3 GetColor(const ray& _ray, hitable* _world, int _depth) {
         ray scattered;
         vec3 attenuation;
         if (_depth < 50 && rec.matPtr->scatter(_ray, rec, attenuation, scattered)) {
-            return attenuation * GetColor(scattered, _world, _depth + 1);
+            return attenuation;// *GetColor(scattered, _world, _depth + 1);
         } else {
             return vec3(0.0f, 0.0f, 0.0f);
         }
     } else {
+        /*
         vec3 unitDirection = unitVector(_ray.direction());
         float t = 0.5f * (unitDirection.y() + 1.0f);
         return (1.0f - t) * vec3(1.0f, 1.0f, 1.0f) + t * vec3(0.5f, 0.7f, 1.0f);
+        */
+        return vec3(0.0f, 0.0f, 0.0f);
     }
-
 }
 
 hitable* randomScene(int _nrOfSpheres) {
@@ -57,7 +59,6 @@ hitable* randomScene(int _nrOfSpheres) {
                 } else { //glass
                     objList.push_back(new sphere(center, 0.2f, new dielectric(1.5f)));
                 }
-                
             }
         }
     }
@@ -72,18 +73,16 @@ hitable* twoSpheres() {
     std::vector<hitable*> objList;
     texture* checker = new checkerTexture(new constantTexture(vec3(1.0f, 1.0f, 1.0f)), new constantTexture(vec3(0.0f, 1.0f, 0.0f)));
     int nx, ny, nn;
-    unsigned char* tex_data = stbi_load("earthmap.png", &nx, &ny, &nn, 0);
-    objList.push_back(new sphere(vec3(0.0f, -1000.0f, -1.0f), 1000.0f, new lambertian(checker)));
-    objList.push_back(new sphere(vec3(0.0f, 2.0f, 0.0f), 2.0f, new lambertian(new imageTexture(tex_data, nx, ny))));
+    unsigned char* tex_data = stbi_load("earthmap.png", &nx, &ny, &nn, 3);
+    //objList.push_back(new sphere(vec3(0.0f, -1000.0f, -1.0f), 1000.0f, new lambertian(new imageTexture(tex_data, nx, ny))));
+    objList.push_back(new sphere(vec3(0.0f, 0.0f, 0.0f), 1.0f, new lambertian(new imageTexture(tex_data, nx, ny))));
     return new hitableList(objList, objList.size());
 }
 
-
-
 int main(){
     std::vector<int> color;
-    int nx = 400, ny = 300, ns = 10;
-    vec3 lookfrom(13.0f, 2.0f, 3.0f);
+    int nx =1920, ny = 1080, ns = 100;
+    vec3 lookfrom(0.0f, 0.0f, -11.0f);
     vec3 lookat(0.0f, 0.0f, 0.0f);
     float disttofocus = 10.0f;
     float aperture = 0.0f;

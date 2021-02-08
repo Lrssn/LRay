@@ -3,6 +3,7 @@
 #include "ray.h"
 #include "vec3.h"
 #include "texture.h"
+#include "utils.h"
 
 struct hitRecord;
 
@@ -17,7 +18,7 @@ public:
 	virtual bool scatter(const ray& _rayIn, const hitRecord& _rec, vec3& _attenuation, ray& _scatteredRay) const {
 		vec3 target = _rec.p + _rec.normal + randomInUnitSphere();
 		_scatteredRay = ray(_rec.p, target - _rec.p, _rayIn.time());
-		_attenuation = this->mAlbedo->value(0.0f, 0.0f, _rec.p);
+		_attenuation = this->mAlbedo->value(_rec.u, _rec.v, _rec.p);
 		return true;
 	}
 private:

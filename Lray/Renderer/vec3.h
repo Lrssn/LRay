@@ -47,7 +47,36 @@ public:
         const auto s = 1e-8;
         return (std::fabs(e[0]) < s) && (std::fabs(e[1]) < s) && (std::fabs(e[2]) < s);
     }
-    
+
+    void translate(float _x, float _y, float _z){
+        e[0] += _x;
+        e[1] += _y;
+        e[2] += _z;
+    }
+
+    void rotateX(float _angle) {
+        float y = e[1] * cos(_angle) + e[2] * (-1 * sin(_angle));
+        float z = e[1] * sin(_angle) + e[2] * cos(_angle);
+        e[1] = y;
+        e[2] = z;
+    }
+    void rotateY(float _angle) {
+        float x = e[0] * cos(_angle) + e[2] * sin(_angle);
+        float z = e[0] * -1 * sin(_angle) + e[2] * cos(_angle);
+        e[0] = x;
+        e[2] = z;
+    }
+    void rotateZ(float _angle) {
+        float x = e[0] * cos(_angle) + e[1] * (-1 * sin(_angle));
+        float y = e[0] * sin(_angle) + e[1] * cos(_angle);
+        e[0] = x;
+        e[1] = y;
+    }
+    void scale(float _x, float _y, float _z) {
+        e[0] *= _x;
+        e[1] *= _y;
+        e[2] *= _z;
+    }
     inline static vec3 random() {
         return vec3(randomDouble(), randomDouble(), randomDouble());
     }

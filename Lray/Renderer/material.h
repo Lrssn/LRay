@@ -10,6 +10,7 @@ struct hitRecord;
 class material {
 public:
 	virtual bool scatter(const ray& _rayIn, const hitRecord& _rec, vec3& _attenuation, ray& _scatteredRay) const = 0;
+	virtual vec3 emitted(float _u, float _v, const vec3& _pos) const { return vec3(0.0f, 0.0f, 0.0f); }
 };
 
 class lambertian : public material {
@@ -27,21 +28,21 @@ private:
 
 class metal : public material {
 public:
-	metal(const vec3& _albedo, float _fuzz) : mAlbedo(_albedo) { if (mFuzz < 1.0f) this->mFuzz = _fuzz; else this->mFuzz = 1.0f; }
+	metal(texture* _albedo, float _fuzz) : mAlbedo(_albedo) { if (mFuzz < 1.0f) this->mFuzz = _fuzz; else this->mFuzz = 1.0f; }
 	virtual bool scatter(const ray& _rayIn, const hitRecord& _rec, vec3& _attenuation, ray& _scatteredRay) const {
 		vec3 reflected = reflect(unitVector(_rayIn.direction()), _rec.normal);
 		_scatteredRay = ray(_rec.p, reflected + this->mFuzz * randomInUnitSphere(), _rayIn.time());
-		_attenuation = this->mAlbedo;
+		_attenuation = this->mAlbedo->value(_rec.u, _rec.v, _rec.p);
 		return (dot(_scatteredRay.direction(), _rec.normal) > 0);
 	}
 private:
-	vec3 mAlbedo;
+	texture* mAlbedo;
 	float mFuzz;
 };
 
 class dielectric : public material {
 public:
-	dielectric(float _refIdx) : mRefIdx(_refIdx) {}
+	dielectric(texture* _albedo, float _a, float _refIdx) : mRefIdx(_refIdx), mAlbedo(_albedo) {}
 	virtual bool scatter(const ray& _rayIn, const hitRecord& _rec, vec3& _attenuation, ray& _scatteredRay) const {
 		vec3 outNormal;
 		vec3 reflected = reflect(_rayIn.direction(), _rec.normal);
@@ -65,6 +66,7 @@ public:
 		}
 		if (randomDouble() < reflectProb) {
 			_scatteredRay = ray(_rec.p, reflected, _rayIn.time());
+			_attenuation = this->mAlbedo->value(_rec.u, _rec.v, _rec.p) * this->mAlpha;
 		} else {
 			_scatteredRay = ray(_rec.p, refracted, _rayIn.time());
 		}
@@ -72,4 +74,19 @@ public:
 	}
 private:
 	float mRefIdx;
+	float mAlpha;
+	texture* mAlbedo;
+};
+
+class diffuseLight : public material {
+public:
+	diffuseLight(texture* _tex) { this->mEmit = _tex; }
+	virtual bool scatter(const ray& _rayIn, const hitRecord& _rec, vec3& _attenuation, ray& _scatteredRay) const {
+		return false;
+	}
+	virtual vec3 emitted(float _u, float _v, const vec3& _pos) const {
+		return this->mEmit->value(_u, _v, _pos);
+	}
+private:
+	texture* mEmit;
 };

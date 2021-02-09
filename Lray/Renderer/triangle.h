@@ -4,9 +4,6 @@
 
 struct vertex {
 	vec3 pos;
-	vec3 normal;
-	float u;
-	float v;
 };
 
 class triangle : public hitable {
@@ -28,7 +25,7 @@ public:
 		float d = 1.0 / dot(_ray.direction(), this->mNormal);
 		float u = d * dot(-q, v2v0);
 		float v = d * dot(q, v1v0);
-		float t = d * dot(-this->mNormal, rov0);
+		float t = d * dot(this->mNormal, rov0);
 		if (u < 0.0 || u>1.0 || v < 0.0 || (u + v)>1.0) {
 			return false;
 		}

@@ -12,6 +12,7 @@
 #include "Renderer/sphere.h"
 #include "Renderer/movingSphere.h"
 #include "Renderer/rectangle.h"
+#include "Renderer/triangle.h"
 #include "Renderer/camera.h"
 #include "Renderer/math.h"
 #include "Renderer/material.h"
@@ -34,6 +35,23 @@ vec3 GetColor(const ray& _ray, hitable* _world, int _depth) {
         }
     } else {
         return vec3(0.0f, 0.0f, 0.0f);
+    }
+}
+vec3 GetColor2(const ray& _ray, hitable* _world, int _depth) {
+    hitRecord rec;
+    if (_world->hit(_ray, 0.001f, infinity, rec)) {
+        ray scattered;
+        vec3 attenuation;
+        vec3 emitted = rec.matPtr->emitted(rec.u, rec.v, rec.p);
+        if (_depth < 50 && rec.matPtr->scatter(_ray, rec, attenuation, scattered)) {
+            return attenuation * GetColor2(scattered, _world, _depth + 1);
+        } else {
+            return vec3(0.0f, 0.0f, 0.0f);
+        }
+    } else {
+        vec3 unitDirection = unitVector(_ray.direction());
+        float t = 0.5 * (unitDirection.y() + 1.0);
+        return (1.0 - t) * vec3(1.0, 1.0, 1.0) + t * vec3(0.5, 0.7, 1.0);
     }
 }
 
@@ -86,11 +104,23 @@ hitable* simpleLight() {
     objList.push_back(new rectangleXY(3.0f, 5.0f, 1.0f, 3.0f, -2.0f, new diffuseLight(new constantTexture(vec3(4.0f, 4.0f, 4.0f)))));
     return new hitableList(objList, objList.size());
 }
+hitable* triangleSet() {
+    std::vector<hitable*> objList;
+    vertex v0, v1, v2;
+    v0.pos = vec3(0.0f, 0.0f, 0.0f);
+    v1.pos = vec3(3.0f, 3.0f, 0.0f);
+    v2.pos = vec3(0.0f, 3.0f, 0.0f);
+    texture* pertext = new noiseTexture(4);
+    objList.push_back(new sphere(vec3(0.0f, -1000.0f, -1.0f), 1000.0f, new lambertian(new constantTexture(vec3(1.0f, 1.0f, 1.0f)))));
+    objList.push_back(new triangle(v0, v1, v2, new lambertian(new constantTexture(vec3(1.0f, 0.0f, 0.0f)))));
+    objList.push_back(new sphere(vec3(0.0f, 5.0f, 6.0f), 2.0f, new diffuseLight(new constantTexture(vec3(16.0f, 16.0f, 16.0f)))));
+    return new hitableList(objList, objList.size());
+}
 
 int main(){
     std::vector<int> color;
-    int nx =800, ny = 600, ns = 10;
-    vec3 lookfrom(0.0f, 2.0f, -11.0f);
+    int nx =1920, ny = 1080, ns = 100;
+    vec3 lookfrom(0.0f, 2.0f, 3.0f);
     vec3 lookat(0.0f, 0.0f, 0.0f);
     float disttofocus = 10.0f;
     float aperture = 0.0f;
@@ -98,7 +128,8 @@ int main(){
 
     //hitable* world = randomScene(500);
     //hitable* world = twoSpheres();
-    hitable* world = simpleLight();
+    //hitable* world = simpleLight();
+    hitable* world = triangleSet();
     int current = 0;
     float percent = 0.0f, total = nx * ny;
     std::cout << std::setprecision(5) << percent << "% finished" << std::endl;

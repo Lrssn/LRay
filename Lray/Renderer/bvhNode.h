@@ -9,12 +9,14 @@ class bvhNode: public hitable {
 public:
 	bvhNode() {};
 	bvhNode(const hitableList& _list, float _time0, float _time1)
-		: bvhNode(_list.getList(),0, _list.getSize(), _time0, _time1) {
+		: bvhNode(_list.getList(),0, _list.getList().size(), _time0, _time1) {
 	}
 	bvhNode(const std::vector<hitable*>& _list, int _start, int _end, float _time0, float _time1);
 	virtual bool hit(const ray& _ray, float _tMin, float _tMax, hitRecord& _rec) const;
 	virtual bool boundingBox(float _t0, float _t1, aabb& _bBox) const;
 
+
+	aabb getbox() { return this->mBBox; }
 private:
 	hitable* mLeft;
 	hitable* mRight;
@@ -22,7 +24,7 @@ private:
 };
 
 bool bvhNode::hit(const ray& _ray, float _tMin, float _tMax, hitRecord& _rec) const {
-	/*if (this->mBBox.hit(_ray, _tMin, _tMax)) {
+	if (this->mBBox.hit(_ray, _tMin, _tMax)) {
 		hitRecord leftRec, rightRec;
 		bool hitLeft = this->mLeft->hit(_ray, _tMin, _tMax, leftRec);
 		bool hitRight = this->mRight->hit(_ray, _tMin, _tMax, rightRec);
@@ -44,14 +46,18 @@ bool bvhNode::hit(const ray& _ray, float _tMin, float _tMax, hitRecord& _rec) co
 		}
 	}
     return false;
-	*/
-	if (!this->mBBox.hit(_ray, _tMin, _tMax))
+	/*
+	if (!this->mBBox.hit(_ray, _tMin, _tMax)) {
 		return false;
-
+	}
 	bool hit_left = this->mLeft->hit(_ray, _tMin, _tMax, _rec);
 	bool hit_right = this->mRight->hit(_ray, _tMin,  hit_left ? _rec.t : _tMax, _rec);
 
-	return hit_left || hit_right;
+	if (hit_left || hit_right)
+		return true;
+	else
+		return false;
+	*/
 }
 
 bool bvhNode::boundingBox(float _t0, float _t1, aabb& _bBox) const {
@@ -126,7 +132,7 @@ bvhNode::bvhNode(const std::vector<hitable*>& _list, int _start, int _end, float
 	auto objects = _list;
 	int _n = _end - _start;
 
-	int axis = int(3 * randomDouble());
+	int axis = randomInt(0, 2);
 	if (axis == 0) {
 		std::sort(objects.begin() + _start, objects.begin() + _end, box_x_compare);
 	} else if (axis == 1) {
@@ -135,19 +141,18 @@ bvhNode::bvhNode(const std::vector<hitable*>& _list, int _start, int _end, float
 		std::sort(objects.begin() + _start, objects.begin() + _end, box_z_compare);
 	}
 	if (_n == 1) {
-		mLeft = mRight = _list[0];
+		mLeft = mRight = objects[_start];
 	} else if (_n == 2) {
-		mLeft = _list[0];
-		mRight = _list[1];
+		mLeft = objects[_start];
+		mRight = objects[_start+1];
 	} else {
 		mLeft = new bvhNode(objects, _start, _start + _n / 2, _time0, _time1);
-		mRight = new bvhNode(objects, _start + _n / 2, _end, _time0, _time1);
-		//this->mLeft = new bvhNode(_list, _n / 2, _time0, _time1);
-		//this->mRight = new bvhNode(_list + _n / 2, _n - _n / 2, _time0, _time1);
+		mRight = new bvhNode(objects, _start + (_n / 2), _end, _time0, _time1);
 	}
 	aabb boxLeft, boxRight;
 	if (!mLeft->boundingBox(_time0, _time1, boxLeft) || !mRight->boundingBox(_time0, _time1, boxRight))
 		std::cerr << "no bounding box in bvhNode Constructor\n";
+
 	mBBox = combineBox(boxLeft, boxRight);
 }
 

@@ -44,7 +44,7 @@ public:
 		float maxy = std::max(this->mV0.pos.y(), std::max(this->mV1.pos.y(), this->mV2.pos.y()));
 		float minz = std::min(this->mV0.pos.z(), std::min(this->mV1.pos.z(), this->mV2.pos.z()));
 		float maxz = std::max(this->mV0.pos.z(), std::max(this->mV1.pos.z(), this->mV2.pos.z()));
-		_bBox = aabb(vec3(minx, miny, minz), vec3(maxx, maxy, maxz));
+		_bBox = aabb(vec3(minx, miny, minz) - tiny, vec3(maxx, maxy, maxz) + tiny);
 		return true;
 	}
 private:

@@ -74,5 +74,8 @@
     <ClInclude Include="Renderer\triangle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer\constantVolume.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

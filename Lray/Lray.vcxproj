@@ -150,6 +150,7 @@
     <ClInclude Include="Renderer\aabb.h" />
     <ClInclude Include="Renderer\bvhNode.h" />
     <ClInclude Include="Renderer\camera.h" />
+    <ClInclude Include="Renderer\constantVolume.h" />
     <ClInclude Include="Renderer\rectangle.h" />
     <ClInclude Include="Renderer\hitable.h" />
     <ClInclude Include="Renderer\hitable_list.h" />

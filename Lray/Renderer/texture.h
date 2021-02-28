@@ -42,7 +42,6 @@ public:
 	noiseTexture() {}
 	noiseTexture(float _scale) { this->mScale = _scale; }
 	virtual vec3 value(float _u, float _v, const vec3 _pos) const {
-		//return vec3(1, 1, 1) * mNoise.turb(_pos * this->mScale);
 		return vec3(1, 1, 1) * 0.5f * (1 + sin(this->mScale * _pos.z() + 10 * this->mNoise.turb(_pos)));
 	}
 

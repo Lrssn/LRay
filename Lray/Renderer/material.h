@@ -90,3 +90,33 @@ public:
 private:
 	texture* mEmit;
 };
+
+class multiMaterial : public material {
+public:
+	multiMaterial(std::vector<material*> _m, texture* _sep) { this->mMaterials = _m; this->mSeparation = _sep; }
+	virtual bool scatter(const ray& _rayIn, const hitRecord& _rec, vec3& _attenuation, ray& _scatteredRay) const {
+		
+		float a = this->mSeparation->value(_rec.u, _rec.v, _rec.p).x();
+		return this->mMaterials.at(int(a))->scatter(_rayIn, _rec, _attenuation, _scatteredRay);
+
+	}
+	virtual vec3 emitted(float _u, float _v, const vec3& _pos) const {
+		float a = this->mSeparation->value(_u, _v, _pos).x();
+		return this->mMaterials.at(int(a))->emitted(_u, _v, _pos);
+	}
+private:
+	texture* mSeparation;
+	std::vector<material*> mMaterials;
+};
+
+class isotropic : public material {
+public:
+	isotropic(texture* _tex) { this->mAlbedo = _tex; }
+	virtual bool scatter(const ray& _rayIn, const hitRecord& _rec, vec3& _attenuation, ray& _scatteredRay) const {
+		_scatteredRay = ray(_rec.p, randomInUnitSphere(), _rayIn.time());
+		_attenuation = this->mAlbedo->value(_rec.u, _rec.v, _rec.p);
+		return true;
+	}
+private:
+	texture* mAlbedo;
+};

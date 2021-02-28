@@ -60,3 +60,7 @@ inline float trilinearInterpolation(float _c[2][2][2], float _u, float _v, float
     }
     return accum;
 }
+
+float lerp(float _a, float _b, float _t) {
+    return (1.0f - _t) * _a + _t * _b;
+}

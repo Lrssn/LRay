@@ -14,6 +14,7 @@
 #include "Renderer/movingSphere.h"
 #include "Renderer/rectangle.h"
 #include "Renderer/triangle.h"
+#include "Renderer/constantVolume.h"
 #include "Renderer/camera.h"
 #include "Renderer/math.h"
 #include "Renderer/material.h"
@@ -73,18 +74,24 @@ vec3 GetColor2(const ray& _ray, hitable* _world, int _depth) {
     }
 }
 
-hitable* randomScene(int _nrOfSpheres) {
+hitable* randomScene(int _nrOfSpheres, int _sizex, int _sizey, int _sizez, float _time0, float _time1) {
     hitableList objList;
     texture* checker = new checkerTexture(new constantTexture(vec3(1.0f, 1.0f, 1.0f)), new constantTexture(vec3(0.0f, 1.0f, 0.0f)));
     objList.add(new sphere(vec3(0.0f, -1000.0f, -1.0f), 1000.0f, new lambertian(checker)));
+    std::vector<material*> mats;
+    mats.push_back(new dielectric(new constantTexture(vec3(1.0f, 0.0f, 1.0f)), 0.5f, 1.5f));
+    mats.push_back(new metal(new constantTexture(vec3(1.0f, 0.2f, 0.1f)), 1.0f));
+    //objList.add(new sphere(vec3(0.0f, 0.0f, 0.0f), 3.0f, new multiMaterial(mats, checker)));
     int i = 1;
-    for (int a = -5; a < 5; a++) {
-        for (int b = -5; b < 5; b++) {
+    float diffx = float(_sizex) / _nrOfSpheres;
+    float diffz = float(_sizez) / _nrOfSpheres;
+    for (int a = -(_nrOfSpheres / 2); a < _nrOfSpheres / 2; a++) {
+        for (int b = -_nrOfSpheres / 2; b < _nrOfSpheres / 2; b++) {
             float chooseMat = randomDouble();
-            vec3 center(a + 0.9f * randomDouble(), 0.2f, b + 0.9 * randomDouble());
+            vec3 center(a*diffx + 0.2f * randomDouble(), _sizey*randomDouble(), b*diffz + 0.2 * randomDouble());
             if ((center - vec3(4.0f, 0.2f, 0.0f)).length() > 0.9f) {
                 if (chooseMat < 0.5f) { //diffuse
-                    objList.add(new movingSphere(center, center+vec3(0.0f, 0.5f*randomDouble(), 0.0f), 0.0f, 1.0f,  0.2f, new lambertian(new constantTexture(vec3(randomDouble(), randomDouble(), randomDouble())))));
+                    objList.add(new movingSphere(center, center+vec3(0.0f, 0.5f*randomDouble(), 0.0f), _time0, _time1,  0.2f, new lambertian(new constantTexture(vec3(randomDouble(), randomDouble(), randomDouble())))));
                 } else if (chooseMat < 0.8f) { //diffuse
                     objList.add(new sphere(center, 0.2f, new lambertian(new constantTexture(vec3(randomDouble(), randomDouble(), randomDouble())))));
                 } else if (chooseMat < 0.95f) { //metal
@@ -103,6 +110,19 @@ hitable* randomScene(int _nrOfSpheres) {
     return new hitableList(a);
 }
 
+hitable* oneSphere() {
+    hitableList objList;
+    texture* checker = new checkerTexture(new constantTexture(vec3(1.0f)), new constantTexture(vec3(0.0f)));
+
+    objList.add(new sphere(vec3(0.0f, -1001.0f, 0.0f), 1000.0f, new lambertian(checker)));
+    std::vector<material*> mats;
+    mats.push_back(new dielectric(new constantTexture(vec3(0.4f, 0.2f, 0.1f)), 1.0f, 1.5f));
+    mats.push_back(new metal(new constantTexture(vec3(1.0f, 0.2f, 0.1f)), 0.5f));
+    objList.add(new sphere(vec3(0.0f, 0.0f, 0.0f), 1.0f, new multiMaterial(mats, checker)));
+    objList.add(new sphere(vec3(0.0f, 4.0f, 0.0f), 2.0f, new diffuseLight(new constantTexture(vec3(7.0f)))));
+    auto a = new bvhNode(objList, 0.0f, 1.0f);
+    return new hitableList(a);
+}
 hitable* twoSpheres() {
     hitableList objList;
     texture* checker = new checkerTexture(new constantTexture(vec3(1.0f, 1.0f, 1.0f)), new constantTexture(vec3(0.0f, 1.0f, 0.0f)));
@@ -125,14 +145,6 @@ hitable* fourSpheres() {
     auto a = new bvhNode(objList, 0.0f, 1.0f);
     return new hitableList(a);
 }
-hitable* oneSphere() {
-    hitableList objList;
-    texture* checker = new checkerTexture(new constantTexture(vec3(1.0f, 1.0f, 1.0f)), new constantTexture(vec3(0.0f, 1.0f, 0.0f)));
-    int nx, ny, nn;
-    objList.add(new sphere(vec3(0.0f, 0.0f, 0.0f), 1.0f, new lambertian(checker)));
-    auto a = new bvhNode(objList, 0.0f, 1.0f);
-    return new hitableList(a);
-}
 
 hitable* simpleLight() {
     hitableList objList;
@@ -141,7 +153,7 @@ hitable* simpleLight() {
     objList.add(new sphere(vec3(0.0f, -1000.0f, -1.0f), 1000.0f, new lambertian(pertext)));
     objList.add(new sphere(vec3(0.0f, 2.0f, 0.0f), 2.0f, new lambertian(pertext)));
     objList.add(new sphere(vec3(0.0f, 7.0f, 0.0f), 2.0f, new diffuseLight(new constantTexture(vec3(4.0f, 4.0f, 4.0f)))));
-    objList.add(new rectangleXY(3.0f, 5.0f, 1.0f, 3.0f, -2.0f, new diffuseLight(new constantTexture(vec3(40.0f, 40.0f, 40.0f)))));
+    objList.add(new rectangleXY(3.0f, 5.0f, 1.0f, 3.0f, -2.0f, new diffuseLight(new constantTexture(vec3(4.0f)))));
 
     auto a = new bvhNode(objList, 0.0f, 1.0f);
     return new hitableList(a);
@@ -162,26 +174,39 @@ hitable* triangleSet() {
     a->getbox().writebox();
     return new hitableList(a);
 }
+hitable* smoke() {
+    hitableList objList;
+    texture* checker = new checkerTexture(new constantTexture(vec3(1.0f, 1.0f, 1.0f)), new constantTexture(vec3(0.0f, 1.0f, 0.0f)));
+    int nx, ny, nn;
+    //unsigned char* tex_data = stbi_load("earthmap.png", &nx, &ny, &nn, 3);
 
+    objList.add(new sphere(vec3(0.0f, 4.0f, 0.0f), 2.0f, new diffuseLight(new constantTexture(vec3(4.0f)))));
+    objList.add(new sphere(vec3(0.0f, -1000.0f, -1.0f), 1000.0f, new lambertian(checker)));
+    hitable* vol = new sphere(vec3(0.0f, 1.0f, 0.0f), 1.0f, new lambertian(checker));
+    objList.add(new constantVolume(vol, 0.1f, new constantTexture(vec3(1.0f))));
+    auto a = new bvhNode(objList, 0.0f, 1.0f);
+    return new hitableList(a);
+}
 
 int main(){
     std::vector<int> color;
     //highres
     //int nx = 3840, ny = 2160, ns = 100;
     //test
-    int nx = 1280, ny = 720, ns = 10;
-    vec3 lookfrom(0.0f, 3.0f, 5.0f);
+    int nx = 1920, ny = 1080, ns = 1000;
+    vec3 lookfrom(7.0f, 3.0f, 0.0f);
     vec3 lookat(0.0f, 0.0f, 0.0f);
     float disttofocus = 10.0f;
     float aperture = 0.0f;
-    camera cam(lookfrom, lookat, vec3(0.0f, 1.0f, 0.0f), 90.0f, float(nx)/float(ny), aperture, disttofocus, 0.0f, 1.0f);
+    camera cam(lookfrom, lookat, vec3(0.0f, 1.0f, 0.0f), 50.0f, float(nx)/float(ny), aperture, disttofocus, 0.0f, 1.0f);
 
-    //hitable* world = randomScene(500);
+    //hitable* world = randomScene(25, 25, 1, 25, 0.0f, 1.0f);
     //hitable* world = twoSpheres();
     //hitable* world = fourSpheres();
     //hitable* world = oneSphere();
+    hitable* world = smoke();
     //hitable* world = simpleLight();
-    hitable* world = triangleSet();
+    //hitable* world = triangleSet();
     int current = 0;
     float percent = 0.0f, total = nx * ny;
     std::cout << std::setprecision(5) << percent << "% finished" << std::endl;
@@ -192,7 +217,7 @@ int main(){
                 float u = float(i + randomDouble()) / float(nx);
                 float v = float(j + randomDouble()) / float(ny);
                 ray r = cam.createRay(u, v);
-                col += GetColor2(r, world, 0);
+                col += GetColor(r, world, 0);
             }
             col /= float(ns);
             col = vec3(sqrt(col[0]), sqrt(col[1]), sqrt(col[2]));

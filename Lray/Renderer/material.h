@@ -9,7 +9,8 @@ struct hitRecord;
 
 class material {
 public:
-	virtual bool scatter(const ray& _rayIn, const hitRecord& _rec, vec3& _attenuation, ray& _scatteredRay) const = 0;
+	virtual bool scatter(const ray& _rayIn, const hitRecord& _rec, vec3& _attenuation, ray& _scatteredRay) const { return false; };
+	virtual float scatteringPDF(const ray& _rayIn, const hitRecord& _rec, vec3& _attenuation, ray& _scatteredRay, float _pdf) const { return false; };
 	virtual vec3 emitted(float _u, float _v, const vec3& _pos) const { return vec3(0.0f, 0.0f, 0.0f); }
 };
 
@@ -22,6 +23,9 @@ public:
 		_attenuation = this->mAlbedo->value(_rec.u, _rec.v, _rec.p);
 		return true;
 	}
+	virtual float scatteringPDF(const ray& _rayIn, const hitRecord& _rec, vec3& _attenuation, ray& _scatteredRay, float _pdf) const {
+		return false; 
+	};
 private:
 	texture* mAlbedo;
 };

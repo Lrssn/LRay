@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30204.135
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.31911.260
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lray", "Lray\Lray.vcxproj", "{0BB857CF-5F13-49E0-B40A-DCB6629C89AA}"
 EndProject
@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LScene", "LScene\LScene.vcx
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LUtils", "LUtils\LUtils.vcxproj", "{0857D57C-8D83-4E34-82A8-3A92A3D4D19A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Opencl", "Opencl\Opencl.vcxproj", "{CECF2F16-9CD8-4BBE-B855-DF6DB970F678}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,6 +46,14 @@ Global
 		{0857D57C-8D83-4E34-82A8-3A92A3D4D19A}.Release|x64.Build.0 = Release|x64
 		{0857D57C-8D83-4E34-82A8-3A92A3D4D19A}.Release|x86.ActiveCfg = Release|Win32
 		{0857D57C-8D83-4E34-82A8-3A92A3D4D19A}.Release|x86.Build.0 = Release|Win32
+		{CECF2F16-9CD8-4BBE-B855-DF6DB970F678}.Debug|x64.ActiveCfg = Debug|x64
+		{CECF2F16-9CD8-4BBE-B855-DF6DB970F678}.Debug|x64.Build.0 = Debug|x64
+		{CECF2F16-9CD8-4BBE-B855-DF6DB970F678}.Debug|x86.ActiveCfg = Debug|Win32
+		{CECF2F16-9CD8-4BBE-B855-DF6DB970F678}.Debug|x86.Build.0 = Debug|Win32
+		{CECF2F16-9CD8-4BBE-B855-DF6DB970F678}.Release|x64.ActiveCfg = Release|x64
+		{CECF2F16-9CD8-4BBE-B855-DF6DB970F678}.Release|x64.Build.0 = Release|x64
+		{CECF2F16-9CD8-4BBE-B855-DF6DB970F678}.Release|x86.ActiveCfg = Release|Win32
+		{CECF2F16-9CD8-4BBE-B855-DF6DB970F678}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

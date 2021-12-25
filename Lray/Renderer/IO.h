@@ -3,8 +3,11 @@
 #include <iostream>
 #include <fstream>
 #include <cmath>
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "../Externals/stb_image_write.h"
 
-inline void writeppm(int _sizex, int _sizey, std::vector<int> _data, std::string _name) {
+
+inline void writeppm(int _sizex, int _sizey, std::vector<unsigned char> _data, std::string _name) {
 	std::ofstream myfile;
 	std::string filename = _name + ".ppm";
 	std::cout << "writing to " << filename << std::endl;
@@ -17,4 +20,9 @@ inline void writeppm(int _sizex, int _sizey, std::vector<int> _data, std::string
 	}
 	std::cout << "finished writing to " << filename << std::endl;
 	myfile.close();
+}
+
+inline void writepng(int _sizex, int _sizey, std::vector<unsigned char> _data, std::string _name) {
+	std::string filename = _name + ".png";
+	stbi_write_png(filename.c_str(), _sizex, _sizey, 3, std::data(_data), _sizex * 3);
 }

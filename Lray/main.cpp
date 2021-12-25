@@ -1,4 +1,5 @@
 #define STB_IMAGE_IMPLEMENTATION
+#define _CRT_SECURE_NO_WARNINGS
 
 #include <float.h>
 #include <stdlib.h>
@@ -137,14 +138,14 @@ int main(){
     //hitable* world = randomScene(25, 25, 1, 25, 0.0f, 1.0f);
     //hitable* world = twoSpheres();
     //hitable* world = fourSpheres();
-    //hitable* world = oneSphere();
-    hitable* world = smoke();
+    hitable* world = oneSphere();
+    //hitable* world = smoke();
     //hitable* world = simpleLight();
     //hitable* world = triangleSet();
     
     LRay ray(cam, nx, ny, ns);
     ray.render(world);
     
-    writeppm(nx, ny, ray.getPixels(), "helloworld");
+    writepng(nx, ny, ray.getPixels(), "helloworld");
     std::cout << "Ray!\n";
 }

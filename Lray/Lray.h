@@ -96,11 +96,11 @@ public:
         }
     }
 
-    std::vector<int> getPixels(){
+    std::vector<unsigned char> getPixels(){
         return mPixels;
     }
 private:
     camera mCam;
-    std::vector<int> mPixels;
+    std::vector<unsigned char> mPixels;
     int mSizeX, mSizeY, mNrOfRays, mTotal;
 };
